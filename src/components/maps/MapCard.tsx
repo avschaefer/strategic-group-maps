@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import type { StrategicMap } from '../../types';
 import { useAppStore } from '../../store/useAppStore';
 import { ScatterChart } from '../chart/ScatterChart';
@@ -16,6 +16,8 @@ export function MapCard({ map }: MapCardProps) {
   const updateRating = useAppStore((s) => s.updateRating);
   const deleteMap = useAppStore((s) => s.deleteMap);
   const placeAllFirms = useAppStore((s) => s.placeAllFirms);
+
+  const [showTable, setShowTable] = useState(true);
 
   const xVar = variables.find((v) => v.id === map.xVariableId);
   const yVar = variables.find((v) => v.id === map.yVariableId);
@@ -86,15 +88,35 @@ export function MapCard({ map }: MapCardProps) {
             onRatingChange={(firmId, x, y) => handleRatingChange(firmId, x, y)}
           />
         </div>
-        <div className="flex-1 p-5 border-t lg:border-t-0 lg:border-l border-[#f0ece6] min-w-[280px]">
-          <RatingsTable
-            firms={firms}
-            ratings={map.ratings}
-            xLabel={xVar.name}
-            yLabel={yVar.name}
-            onRatingChange={handleRatingChange}
-          />
-        </div>
+        {showTable ? (
+          <div className="flex-1 p-5 border-t lg:border-t-0 lg:border-l border-[#f0ece6] min-w-[280px]">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[11px] font-medium text-[#8c8475] uppercase tracking-wider">Coordinates</span>
+              <button
+                onClick={() => setShowTable(false)}
+                className="px-2.5 py-1 text-[10px] font-medium text-[#8c8475] bg-[#f0ece6] rounded-md hover:bg-[#e8e4dd] transition-colors"
+              >
+                Hide Panel
+              </button>
+            </div>
+            <RatingsTable
+              firms={firms}
+              ratings={map.ratings}
+              xLabel={xVar.name}
+              yLabel={yVar.name}
+              onRatingChange={handleRatingChange}
+            />
+          </div>
+        ) : (
+          <div className="flex items-start p-3 border-t lg:border-t-0 lg:border-l border-[#f0ece6]">
+            <button
+              onClick={() => setShowTable(true)}
+              className="px-2.5 py-1 text-[10px] font-medium text-[#8c8475] bg-[#f0ece6] rounded-md hover:bg-[#e8e4dd] transition-colors"
+            >
+              Show Panel
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

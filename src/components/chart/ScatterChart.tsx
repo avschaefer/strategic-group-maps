@@ -70,16 +70,7 @@ export function ScatterChart({ firms, ratings, xLabel, yLabel, onRatingChange }:
 
   const getFirmById = (id: string) => firms.find((f) => f.id === id);
 
-  // Collect visible ratings for legend
   const visibleRatings = ratings.filter((r) => r.x !== null && r.y !== null && getFirmById(r.firmId));
-
-  // Legend dimensions
-  const legendItemH = 18;
-  const legendPadding = 10;
-  const legendWidth = 100;
-  const legendHeight = visibleRatings.length * legendItemH + legendPadding * 2;
-  const legendX = CHART_WIDTH - CHART_MARGIN.right - legendWidth - 8;
-  const legendY = CHART_MARGIN.top + 8;
 
   return (
     <div className="relative">
@@ -107,6 +98,7 @@ export function ScatterChart({ firms, ratings, xLabel, yLabel, onRatingChange }:
         </button>
       </div>
 
+      <div className="flex items-start gap-3">
       <svg
         ref={svgRef}
         width={CHART_WIDTH}
@@ -265,48 +257,35 @@ export function ScatterChart({ firms, ratings, xLabel, yLabel, onRatingChange }:
           );
         })}
 
-        {/* Legend */}
-        {showLegend && visibleRatings.length > 0 && (
-          <g>
-            <rect
-              x={legendX}
-              y={legendY}
-              width={legendWidth}
-              height={legendHeight}
-              fill="rgba(250,249,247,0.92)"
-              stroke="#e8e4dd"
-              strokeWidth={0.75}
-              rx={6}
-            />
-            {visibleRatings.map((r, i) => {
-              const firm = getFirmById(r.firmId);
-              if (!firm) return null;
-              const itemY = legendY + legendPadding + i * legendItemH + legendItemH / 2;
-              return (
-                <g key={r.firmId}>
-                  <circle
-                    cx={legendX + 16}
-                    cy={itemY}
-                    r={5}
-                    fill={firm.color}
-                    fillOpacity={0.85}
-                  />
-                  <text
-                    x={legendX + 26}
-                    y={itemY + 3.5}
-                    fontSize={10}
-                    fill="#3d3929"
-                    fontFamily="Inter, system-ui, sans-serif"
-                    fontWeight={400}
-                  >
-                    {firm.name}
-                  </text>
-                </g>
-              );
-            })}
-          </g>
-        )}
       </svg>
+
+      {/* Legend — rendered outside SVG so it never overlaps bubbles */}
+      {showLegend && visibleRatings.length > 0 && (
+        <div
+          className="flex-shrink-0 rounded-lg border border-[#e8e4dd] bg-[rgba(250,249,247,0.92)] px-3 py-2.5 self-start mt-[30px]"
+          style={{ minWidth: 120 }}
+        >
+          {visibleRatings.map((r) => {
+            const firm = getFirmById(r.firmId);
+            if (!firm) return null;
+            return (
+              <div key={r.firmId} className="flex items-center gap-2 py-[3px]">
+                <span
+                  className="w-2.5 h-2.5 rounded-full shrink-0"
+                  style={{ backgroundColor: firm.color, opacity: 0.85 }}
+                />
+                <span
+                  className="text-[10px] text-[#3d3929] whitespace-nowrap"
+                  style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                >
+                  {firm.name}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      </div>
     </div>
   );
 }
