@@ -9,11 +9,11 @@ export function Sidebar() {
         <h1 className="text-[15px] font-semibold text-[#3d3929] tracking-tight mb-0.5">Strategic Group Maps</h1>
         <p className="text-[11px] text-[#8c8475] tracking-wide uppercase">Competitive Landscape</p>
       </div>
+      <SessionBackup />
+      <div className="border-t border-[#e8e4dd]" />
       <VariableList />
       <div className="border-t border-[#e8e4dd]" />
       <FirmList />
-      <div className="border-t border-[#e8e4dd] mt-auto" />
-      <SessionBackup />
     </aside>
   );
 }

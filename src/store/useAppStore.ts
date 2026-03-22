@@ -21,6 +21,8 @@ interface AppState {
   deleteMap: (id: string) => void;
   updateRating: (mapId: string, firmId: string, x: number | null, y: number | null) => void;
 
+  placeAllFirms: (mapId: string) => void;
+
   exportSession: () => string;
   importSession: (json: string) => void;
 }
@@ -102,6 +104,22 @@ export const useAppStore = create<AppState>()(
                   ...m,
                   ratings: m.ratings.map((r) =>
                     r.firmId === firmId ? { ...r, x, y } : r
+                  ),
+                }
+              : m
+          ),
+        })),
+
+      placeAllFirms: (mapId) =>
+        set((s) => ({
+          maps: s.maps.map((m) =>
+            m.id === mapId
+              ? {
+                  ...m,
+                  ratings: m.ratings.map((r) =>
+                    r.x === null || r.y === null
+                      ? { ...r, x: 5.5, y: 5.5 }
+                      : r
                   ),
                 }
               : m

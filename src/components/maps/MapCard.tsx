@@ -15,6 +15,7 @@ export function MapCard({ map }: MapCardProps) {
   const variables = useAppStore((s) => s.variables);
   const updateRating = useAppStore((s) => s.updateRating);
   const deleteMap = useAppStore((s) => s.deleteMap);
+  const placeAllFirms = useAppStore((s) => s.placeAllFirms);
 
   const xVar = variables.find((v) => v.id === map.xVariableId);
   const yVar = variables.find((v) => v.id === map.yVariableId);
@@ -53,6 +54,14 @@ export function MapCard({ map }: MapCardProps) {
       <div className="flex items-center justify-between px-6 py-3.5 border-b border-[#f0ece6]">
         <h3 className="font-semibold text-[15px] text-[#3d3929] tracking-tight">{map.name}</h3>
         <div className="flex items-center gap-2">
+          {map.ratings.some((r) => r.x === null || r.y === null) && (
+            <button
+              onClick={() => placeAllFirms(map.id)}
+              className="px-3 py-1.5 text-[11px] font-medium text-[#3d3929] bg-[#f0ece6] rounded-lg hover:bg-[#e8e4dd] transition-colors"
+            >
+              Add All Firms
+            </button>
+          )}
           <button
             onClick={handleExport}
             className="px-3 py-1.5 text-[11px] font-medium text-[#3d3929] bg-[#f0ece6] rounded-lg hover:bg-[#e8e4dd] transition-colors"
