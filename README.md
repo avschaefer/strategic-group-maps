@@ -1,6 +1,6 @@
 # Strategic Group Maps
 
-A browser app for building **strategic group maps**: scatter plots of firms along two competitive dimensions (variables). Your work is saved automatically in this browser.
+A browser app for building **strategic group maps**: scatter plots of firms along two competitive dimensions (variables). Your work is saved automatically in the browser.
 
 ## Using the app
 
@@ -11,13 +11,15 @@ A browser app for building **strategic group maps**: scatter plots of firms alon
 3. **Create a map** — Click **+ New Map**, name the map, and pick which variable is the **horizontal (X)** axis and which is the **vertical (Y)** axis.
 
 4. **Place firms** — On each map you can:
-   - **Drag** a firm’s bubble on the chart to set its position (ratings are on a fixed scale shown on the axes).
+   - **Drag** a firm's bubble on the chart to set its position (ratings are on a fixed scale shown on the axes).
    - Adjust values in the **table** next to the chart if you prefer typing numbers.
    - Use the chart controls to show or hide **labels** and the **legend** when you need a cleaner view.
 
 5. **Export or remove a map** — **Export PNG** downloads an image of the chart area. **Delete** removes that map only (your variables and firms stay in the sidebar).
 
-**Data storage:** Everything is stored in your browser’s **local storage** for this site. Clearing site data, using another browser, or private browsing without the same storage means you won’t see the same maps. There is no server account or cloud sync.
+6. **Backup & restore** — At the bottom of the sidebar, use **Download** to save all your variables, firms, and maps as a `.json` file. Use **Upload** to restore from a previously downloaded file. This lets you recover your work if browser data is cleared, or transfer it to another device.
+
+**Data storage:** Everything is stored in your browser's **local storage** for this site. Clearing site data, using another browser, or private browsing without the same storage means you won't see the same maps. Use the backup buttons described above to keep a portable copy. There is no server account or cloud sync.
 
 ## Hosting on Vercel
 
@@ -25,13 +27,13 @@ This project is a static **Vite** build. On [Vercel](https://vercel.com), import
 
 - **Build command:** `npm run build`
 - **Output directory:** `dist`
-- **Install command:** `npm install` (or your package manager’s equivalent)
+- **Install command:** `npm install` (or your package manager's equivalent)
 
 No extra configuration is required for a single-page app at the site root.
 
 ## Pushing to Git
 
-Before your first commit, confirm you are **not** committing dependencies or build output. This repo’s `.gitignore` already excludes `node_modules`, `dist`, and common log/editor files.
+Before your first commit, confirm you are **not** committing dependencies or build output. This repo's `.gitignore` already excludes `node_modules`, `dist`, and common log/editor files.
 
 Typical workflow:
 
@@ -42,4 +44,3 @@ git commit -m "Initial commit"
 ```
 
 Connect the folder to your remote (GitHub, GitLab, etc.) and push when you are ready.
-# strategic-group-maps

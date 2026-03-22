@@ -1,5 +1,6 @@
 import { VariableList } from './VariableList';
 import { FirmList } from './FirmList';
+import { SessionBackup } from './SessionBackup';
 
 export function Sidebar() {
   return (
@@ -11,6 +12,8 @@ export function Sidebar() {
       <VariableList />
       <div className="border-t border-[#e8e4dd]" />
       <FirmList />
+      <div className="border-t border-[#e8e4dd] mt-auto" />
+      <SessionBackup />
     </aside>
   );
 }

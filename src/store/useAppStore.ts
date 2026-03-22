@@ -20,6 +20,9 @@ interface AppState {
   createMap: (name: string, xVarId: string, yVarId: string) => void;
   deleteMap: (id: string) => void;
   updateRating: (mapId: string, firmId: string, x: number | null, y: number | null) => void;
+
+  exportSession: () => string;
+  importSession: (json: string) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -104,6 +107,19 @@ export const useAppStore = create<AppState>()(
               : m
           ),
         })),
+
+      exportSession: () => {
+        const { variables, firms, maps } = get();
+        return JSON.stringify({ variables, firms, maps }, null, 2);
+      },
+
+      importSession: (json) => {
+        const data = JSON.parse(json);
+        const variables = Array.isArray(data.variables) ? data.variables : [];
+        const firms = Array.isArray(data.firms) ? data.firms : [];
+        const maps = Array.isArray(data.maps) ? data.maps : [];
+        set({ variables, firms, maps });
+      },
     }),
     { name: 'strategic-group-maps' }
   )
